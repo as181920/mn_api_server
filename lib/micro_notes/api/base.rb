@@ -27,7 +27,8 @@ class MicroNotes < Grape::API
 
         desc "find entry with its id"
         get ":entry_id" do
-          Note.find(params[:note_id]).find_entry_with_data("entry_id" => params[:entry_id])
+          #Note.find(params[:note_id]).find_entry_with_data("entry_id" => params[:entry_id])
+          Entry.find(params[:entry_id]).with_data
         end
       end
     end
