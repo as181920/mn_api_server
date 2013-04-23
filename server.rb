@@ -6,6 +6,8 @@ require "grape"
 require "mn_model"
 require "micro_notes/api/base"
 
+ActiveRecord::Base.logger = Logger.new('log/db.log', 'weekly')
+
 include MnModel
 
 class Application < Goliath::API
