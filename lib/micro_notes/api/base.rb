@@ -1,3 +1,5 @@
+require "micro_notes/api/note"
+
 class MicroNotes < Grape::API
   format :json
 
