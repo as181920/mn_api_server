@@ -18,11 +18,35 @@ class MicroNotes < Grape::API
       Note.all
     end
 
+    desc "create a note"
+    post "/" do
+      Note.create name: params["note"]["name"], description: params["note"]["description"] if params["note"].present?
+    end
+
     resources ":note_id" do
       desc "Return note info"
       get "/" do
         #Note.where(id: params[:id]).first
-        Note.find params[:note_id]
+        Note.find_by id: params[:note_id]
+      end
+
+      desc "Update note info"
+      put "/" do
+        #note = Note.find params[:note_id]
+        #note.update_attributes name: params["note"]["name"], description: params["note"]["description"] if params["note"].present?
+        Note.update params[:note_id], name: params["note"]["name"], description: params["note"]["description"] if params["note"].present?
+      end
+
+      desc "Delete a note"
+      delete "/" do
+        Note.destroy params[:note_id]
+      end
+
+      resources :fields do
+        desc "all fields of note"
+        get "/" do
+          Field.where note_id: params[:note_id]
+        end
       end
 
       resources :entries do
