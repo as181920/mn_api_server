@@ -9,6 +9,11 @@ class MicroNotes < Grape::API
 
   resources :notes do
     desc "Return all notes"
+    get "/" do
+      Note.all
+    end
+
+    desc "Return all notes"
     get "all" do
       Note.all
     end
