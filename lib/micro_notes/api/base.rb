@@ -1,7 +1,11 @@
-require "micro_notes/api/note"
+require "micro_notes/api/extend"
 
 class MicroNotes < Grape::API
   format :json
+
+  get "/" do
+    "Welcome to use Micro-Notes platform"
+  end
 
   resources :notes do
     desc "Return all notes"
