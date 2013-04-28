@@ -32,9 +32,10 @@ class MicroNotes < Grape::API
 
       desc "Update note info"
       put "/" do
-        #note = Note.find params[:note_id]
-        #note.update_attributes name: params["note"]["name"], description: params["note"]["description"] if params["note"].present?
-        Note.update params[:note_id], name: params["note"]["name"], description: params["note"]["description"] if params["note"].present?
+        note = Note.find params[:note_id]
+        note.update_attributes name: params["note"]["name"], description: params["note"]["description"] if params["note"].present?
+        note
+        #Note.update params[:note_id], name: params["note"]["name"], description: params["note"]["description"] if params["note"].present?
       end
 
       desc "Delete a note"
@@ -47,12 +48,38 @@ class MicroNotes < Grape::API
         get "/" do
           Field.where note_id: params[:note_id]
         end
+
+        desc "create a field for note"
+        post "/" do
+          note = Note.find_by id: params[:note_id]
+          field = note.fields.create name: params["field"]["name"]
+        end
+
+        namespace ":field_id" do
+          desc "Return field info for a note"
+          get "/" do
+            Field.find_by id: params[:field_id]
+          end
+
+          desc "Update field info for a note"
+          put "/" do
+            field = Field.find_by id: params[:field_id]
+            field.update_attributes name: params["field"]["name"]
+            field
+          end
+
+          desc "Delete field for a note"
+          delete "/" do
+            Field.destroy params[:field_id]
+          end
+        end
       end
 
       namespace :entries do
         desc "First page of entries for a note"
         get "/" do
-          "TODO"
+          #Entry.where note_id: params[:note_id]
+          Note.find(params[:note_id]).all_entries_with_data
         end
 
         desc "Return all entries with data for a note"
@@ -65,6 +92,14 @@ class MicroNotes < Grape::API
           #Note.find(params[:note_id]).find_entry_with_data("entry_id" => params[:entry_id])
           Entry.find(params[:entry_id]).with_data
         end
+
+        desc "create entry with data"
+        post "create_with_data" do
+          note = Note.find params[:note_id]
+          #entry.merge!(entry['data']).delete "data"
+          entry = note.entries.create_with_data params["data"]
+        end
+
       end
     end
   end
