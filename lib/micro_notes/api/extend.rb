@@ -1,6 +1,6 @@
 class MicroNotes < Grape::API
 
-  resources :test do
+  namespace :test do
     desc "test"
     get "/" do
       "test ok"

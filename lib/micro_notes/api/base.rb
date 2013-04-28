@@ -7,7 +7,7 @@ class MicroNotes < Grape::API
     "Welcome to use Micro-Notes platform"
   end
 
-  resources :notes do
+  namespace :notes do
     desc "Return all notes"
     get "/" do
       Note.all
@@ -23,7 +23,7 @@ class MicroNotes < Grape::API
       Note.create name: params["note"]["name"], description: params["note"]["description"] if params["note"].present?
     end
 
-    resources ":note_id" do
+    namespace ":note_id" do
       desc "Return note info"
       get "/" do
         #Note.where(id: params[:id]).first
@@ -42,14 +42,14 @@ class MicroNotes < Grape::API
         Note.destroy params[:note_id]
       end
 
-      resources :fields do
+      namespace :fields do
         desc "all fields of note"
         get "/" do
           Field.where note_id: params[:note_id]
         end
       end
 
-      resources :entries do
+      namespace :entries do
         desc "First page of entries for a note"
         get "/" do
           "TODO"
