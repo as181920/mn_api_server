@@ -18,6 +18,12 @@ class MicroNotes < Grape::API
       Note.all
     end
 
+    #desc "Return all entries with data for a note"
+    #get "all_entries_with_data" do
+    #  note = Note.find params[:note_id]
+    #  note.all_entries_with_data
+    #end
+
     desc "create a note"
     post "/" do
       Note.create name: params["note"]["name"], description: params["note"]["description"] if params["note"].present?
@@ -87,9 +93,13 @@ class MicroNotes < Grape::API
           Note.find(params[:note_id]).all_entries_with_data
         end
 
-        desc "find entry with its id"
-        get ":entry_id" do
-          #Note.find(params[:note_id]).find_entry_with_data("entry_id" => params[:entry_id])
+        desc "Return all entries with data for a note"
+        get "all_data" do
+          Entry.all_data note_id: params[:note_id]
+        end
+
+        desc "find entry by its id using find_with_data"
+        get "find_with_data" do
           Entry.find(params[:entry_id]).with_data
         end
 
@@ -100,6 +110,13 @@ class MicroNotes < Grape::API
           entry = note.entries.create_with_data params["data"]
         end
 
+        namespace ":entry_id" do
+          desc "find entry by its id"
+          get "/" do
+            #Note.find(params[:note_id]).find_entry_with_data("entry_id" => params[:entry_id])
+            Entry.find(params[:entry_id]).with_data
+          end
+        end
       end
     end
   end
