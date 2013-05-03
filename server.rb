@@ -1,6 +1,7 @@
 $:.push "lib", __FILE__
 
 require "bundler/setup"
+require "pry"
 require "goliath"
 require "grape"
 require "mn_model"

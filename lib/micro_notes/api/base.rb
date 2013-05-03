@@ -111,6 +111,11 @@ class MicroNotes < Grape::API
           entry = note.entries.create_with_data params["data"]
         end
 
+        desc "update entry with data by its id"
+        put "update_with_data" do
+          Entry.update_with_data ({"id" => params["entry_id"]}.merge!(params["data"]))
+        end
+
         namespace ":entry_id" do
           desc "find entry by its id"
           get "/" do
