@@ -107,6 +107,7 @@ class MicroNotes < Grape::API
         post "create_with_data" do
           note = Note.find params[:note_id]
           #entry.merge!(entry['data']).delete "data"
+          #entry = note.entries.create_with_data params["entry"]["data"]
           entry = note.entries.create_with_data params["data"]
         end
 
