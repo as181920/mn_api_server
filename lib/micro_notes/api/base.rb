@@ -113,7 +113,7 @@ class MicroNotes < Grape::API
 
         desc "update entry with data by its id"
         put "update_with_data" do
-          Entry.update_with_data ({"id" => params["entry_id"]}.merge!(params["data"]))
+          Entry.update_with_data params["entry_id"], params["data"]
         end
 
         namespace ":entry_id" do
