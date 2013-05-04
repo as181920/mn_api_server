@@ -108,12 +108,12 @@ class MicroNotes < Grape::API
           note = Note.find params[:note_id]
           #entry.merge!(entry['data']).delete "data"
           #entry = note.entries.create_with_data params["entry"]["data"]
-          entry = note.entries.create_with_data params["data"]
+          entry = note.entries.create_with_data params["entry"]["data"]
         end
 
         desc "update entry with data by its id"
         put "update_with_data" do
-          Entry.update_with_data params["entry_id"], params["data"]
+          Entry.update_with_data params["entry"]["entry_id"], params["entry"]["data"]
         end
 
         namespace ":entry_id" do
