@@ -124,6 +124,12 @@ class MicroNotes < Grape::API
           put "update_with_data" do
             Entry.update_with_data params["entry"]["id"], params["entry"]["data"]
           end
+
+          desc "delete entry"
+          delete "/" do
+            entry = Entry.find(params[:id])
+            entry.destroy
+          end
         end
       end
     end
