@@ -61,22 +61,22 @@ class MicroNotes < Grape::API
           field = note.fields.create name: params["field"]["name"]
         end
 
-        namespace ":field_id" do
+        namespace ":id" do
           desc "Return field info for a note"
           get "/" do
-            Field.find_by id: params[:field_id]
+            Field.find_by id: params[:id]
           end
 
           desc "Update field info for a note"
           put "/" do
-            field = Field.find_by id: params[:field_id]
+            field = Field.find_by id: params[:id]
             field.update_attributes name: params["field"]["name"]
             field
           end
 
           desc "Delete field for a note"
           delete "/" do
-            Field.destroy params[:field_id]
+            Field.destroy params[:id]
           end
         end
       end
@@ -98,10 +98,6 @@ class MicroNotes < Grape::API
           Entry.all_data note_id: params[:note_id]
         end
 
-        desc "find entry by its id using find_with_data"
-        get "find_with_data" do
-          Entry.find(params[:entry_id]).with_data
-        end
 
         desc "create entry with data"
         post "create_with_data" do
@@ -111,16 +107,22 @@ class MicroNotes < Grape::API
           entry = note.entries.create_with_data params["entry"]["data"]
         end
 
-        desc "update entry with data by its id"
-        put "update_with_data" do
-          Entry.update_with_data params["entry"]["entry_id"], params["entry"]["data"]
-        end
-
-        namespace ":entry_id" do
+        namespace ":id" do
           desc "find entry by its id"
           get "/" do
-            #Note.find(params[:note_id]).find_entry_with_data("entry_id" => params[:entry_id])
-            Entry.find(params[:entry_id]).with_data
+            #Note.find(params[:note_id]).find_entry_with_data("id" => params[:id])
+            #Entry.find(params[:id]).with_data
+            Entry.find(params[:id])
+          end
+
+          desc "find entry by its id with data"
+          get "find_with_data" do
+            Entry.find(params[:id]).with_data
+          end
+
+          desc "update entry with data by its id"
+          put "update_with_data" do
+            Entry.update_with_data params["entry"]["id"], params["entry"]["data"]
           end
         end
       end
