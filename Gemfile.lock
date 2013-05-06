@@ -1,5 +1,6 @@
-PATH
-  remote: /home/as/as_projects/mn_model
+GIT
+  remote: git://github.com/as181920/mn_model.git
+  revision: 0feb27d35d857a0524706e30c965bb6f541bcca0
   specs:
     mn_model (0.0.1)
       activerecord (= 4.0.0.beta1)
@@ -63,8 +64,8 @@ GEM
     i18n (0.6.4)
     log4r (1.1.10)
     method_source (0.8.1)
-    minitest (4.7.3)
-    multi_json (1.7.2)
+    minitest (4.7.4)
+    multi_json (1.7.3)
     multi_xml (0.5.3)
     pg (0.15.1)
     pry (0.9.12.1)

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'grape'
 gem 'goliath'
-gem "mn_model", path: "/home/as/as_projects/mn_model"
+gem "mn_model", github: "as181920/mn_model"
 
 group :development do
   gem "pry"
